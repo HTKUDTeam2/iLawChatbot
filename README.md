@@ -1,71 +1,59 @@
-# Getting Started with Create React App
+# Chatbot Luật sở hữu trí tuệ - iLawChatbot
+Nhóm 2 - Học thống kê ngôn ngữ và ứng dụng 
+Thành viên 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+| Họ và tên                    | MSSV     | Github            |
+| ---------------------------- | -------- | ----------------- |
+| Nguyễn Văn Quang Hưng        | 21120247 | @HungLVT          |
+| Huỳnh Trí Nhân               | 21120302 | @HuynhTriNhan     |
+| Tống Nguyễn Minh Khang       | 21120263 | @jesse-tong       |
+| Trần Thị Kim Huỳnh           | 21120607 | @TranThiKimHuynh  |
 
-## Available Scripts
 
-In the project directory, you can run:
+## 1. Giới thiệu
 
-### `npm start`
+iLawChatbot là một chatbot được xây dựng dựa trên mô hình RAG (Retrieval-Augmented Generation) để trả lời các câu hỏi liên quan đến lĩnh vực luật sở hữu trí tuệ với nguồn tài liệu lấy từ trang chủ [Thư viện Pháp Luật](https://thuvienphapluat.vn/). Chatbot này sử dụng mô hình RAG để truy xuất thông tin từ tập dữ liệu văn bản và sinh câu trả lời dựa trên thông tin truy xuất được. Các bạn có thể tìm đọc những câu hỏi về lĩnh vực luật sở hữu trí tuệ và thử nghiệm chatbot này tại [đây](https://thuvienphapluat.vn/hoi-dap-phap-luat/so-huu-tri-tue)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 2. Cài đặt
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2.1. Cài đặt môi trường  backend
+Vào thư mục backend và thực hiện các bước sau: 
+1. Cài đặt environment:
+```bash
+pip install -r requirements.txt
+```
+2. Thêm file `.env` vào thư mục backend với nội dung:
+``` bash
+OPENAI_API_KEY=your_openai_api_key
+```
 
-### `npm test`
+3. Tạo vectordatabase: 
+```bash
+ python .\handlers\chroma_loader.py .\data\So-huu-tri-tue-processed.csv vector_db
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+4. Khỏi chạy server:
+```bash
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+### 2.2 Khởi chạy chương trình React
 
-### `npm run build`
+Ở trong thư mục chính thực hiện các bước sau: 
+1. Cài đặt các module cần thiết:
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Build chương trình:
+```bash
+npm run build
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Khởi chạy chương trình:
+```bash
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Chương trình sẽ chạy ở địa chỉ `localhost:3000`
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-#iLawChatbot

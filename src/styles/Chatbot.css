@@ -1,14 +1,16 @@
 /* Cập nhật kiểu dáng chung cho chatbot */
 .chatbot-container {
   font-family: Arial, sans-serif;
-  padding: 20px;
+  padding: 2vw; /* Padding linh động với kích thước màn hình */
   background-color: #fff;
-  max-width: 1000px;
+  max-width: 90vw; /* Chiếm 90% chiều rộng màn hình */
+  max-height: 80vh; /* Chiếm 80% chiều cao màn hình */
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 5vh; /* Đặt khoảng cách từ trên cùng bằng 5% chiều cao màn hình */
   border: 2px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: auto; /* Tránh bị tràn nếu nội dung quá lớn */
 }
 
 .chatbot-header {
@@ -95,7 +97,40 @@
 }
 
 .chat-text {
-  font-size: 1em;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #8b0a50; /* Màu chính */
+  padding: 10px;
+  background-color: #f8f1f3; /* Màu nền nhạt để làm nổi bật màu chữ */
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.chat-text p {
+  margin: 0 0 10px;
+}
+
+.chat-text strong {
+  color: #8b0a50; /* Đảm bảo màu mạnh cho chữ "Answer" và "Trích dẫn nguồn" */
+}
+
+.chat-text a {
+  color: #8b0a50; /* Màu của liên kết */
+  text-decoration: none; /* Loại bỏ gạch chân mặc định */
+  font-weight: bold;
+}
+
+.chat-text a:hover {
+  color: #b3006c; /* Màu liên kết khi hover */
+  text-decoration: underline; /* Thêm gạch chân khi hover */
+}
+
+.chat-text ul {
+  padding-left: 20px;
+}
+
+.chat-text ul li {
+  margin-bottom: 5px;
 }
 
 /* Thêm animation cho bot khi đang chờ */
