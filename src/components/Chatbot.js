@@ -10,6 +10,49 @@ const Chatbot = () => {
   const [showQuestions, setShowQuestions] = useState(true); // State kiểm soát việc hiển thị câu hỏi gợi ý
   const [showHeader, setShowHeader] = useState(true); // State kiểm soát việc hiển thị logo và câu chào
   const inputRef = useRef(null); // Tham chiếu đến input để kiểm soát con trỏ
+  const responseChunkRef = useRef(""); // Tham chiếu đến kết quả hiện tại lưu lại từ stream trả về từ backend
+
+  // Hàm truy vấn lấy kết quả từ model và cập nhật lại trên giao diện
+  // Vẫn chưa làm được hiển thị kết quả kiểu stream nên chỉ hiện ra khi có đủ chuỗi kết quả
+  function fetchModelStream(prompt) {
+    console.log(messages)
+    const queryParams = new URLSearchParams();
+    queryParams.append("prompt", prompt);
+
+    console.log("Messages:", messages);
+    fetch("http://127.0.0.1:8000/model?" + queryParams.toString()).then((response) => {
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      var result = "";
+      const readChunk = () => {
+        return reader.read().then(({ done, value }) => {
+            if (done) {
+                return;
+            }
+
+            // Decode and append the new chunk to state
+            const chunk = decoder.decode(value);
+            
+            responseChunkRef.current += chunk;
+            // Continue reading the next chunk
+            return readChunk();
+        });
+      };
+
+      return readChunk();
+    }).catch((err)=> {
+      
+      alert('Có lỗi xảy ra, vui lòng thử lại sau');
+
+    }).finally(() => { 
+      setMessages([
+        ...messages,
+        { sender: "you", text: prompt },
+        { sender: "bot", text: responseChunkRef.current }, // Phản hồi bot
+      ]);
+      responseChunkRef.current = "";
+    });
+  }
 
   // Hàm xử lý khi nhấn câu hỏi gợi ý
   const handleQuestionClick = (question) => {
@@ -33,6 +76,7 @@ const Chatbot = () => {
         { sender: "you", text: inputValue },
         { sender: "bot", text: "Vui lòng đợi 1 chút nhé " }, // Phản hồi bot
       ]);
+      fetchModelStream(inputValue); // Gửi tin nhắn đến model và cập nhật kết quả
       setInputValue(""); // Reset input sau khi gửi
       setShowQuestions(false); // Ẩn các câu hỏi gợi ý khi gửi tin nhắn
       setShowHeader(false); // Ẩn logo và câu chào khi gửi tin nhắn

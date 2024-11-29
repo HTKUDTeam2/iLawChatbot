@@ -96,6 +96,8 @@
 
 .chat-text {
   font-size: 1em;
+  white-space: pre-line; /* Cái này là để hiển thị ngắt dòng trong câu trả lời */
+  /*(do CSS mặc định bỏ qua ký tự ngắt dòng như \r\n và \n)*/
 }
 
 /* Thêm animation cho bot khi đang chờ */

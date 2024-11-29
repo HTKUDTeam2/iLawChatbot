@@ -1,0 +1,7 @@
+Chạy backend trước, rồi chạy frontend
+- Cài FastAPI: pip install fastapi[standard]
+- Chạy backend: fastapi dev backend/main.py
+Chạy frontend: 
+- Cài dependencies: npm install
+- Chạy frontend: npm run start
+Rồi vào: http://localhost:3000 
