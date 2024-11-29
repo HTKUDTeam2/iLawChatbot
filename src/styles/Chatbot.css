@@ -2,8 +2,9 @@
   font-family: Arial, sans-serif;
   padding: 20px;
   background-color: #fff;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
+  margin-top: 50px;
   border: 2px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -45,7 +46,7 @@
 }
 
 .question-button:hover {
-  background-color: #b50040;
+  background-color: #ff7c16;
 }
 
 .chatbot-message {
@@ -74,5 +75,5 @@
 }
 
 .send-button:hover {
-  background-color: #b50040;
+  background-color: #ff7c16;
 }
