@@ -1,3 +1,4 @@
+/* Cập nhật kiểu dáng chung cho chatbot */
 .chatbot-container {
   font-family: Arial, sans-serif;
   padding: 20px;
@@ -49,6 +50,97 @@
   background-color: #ff7c16;
 }
 
+/* Khu vực hiển thị tin nhắn */
+.chat-display {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.chat-bubble {
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.chat-you {
+  background-color: #e8f0fe;
+  color: #333;
+  align-self: flex-end;
+  border-top-right-radius: 0;
+  flex-direction: row-reverse; /* Cho ảnh icon bên phải text */
+  max-width: 100%;
+}
+
+.chat-bot {
+  background-color: #8b0a50;
+  color: #fff;
+  align-self: flex-start;
+  border-top-left-radius: 0;
+  max-width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.chat-icon {
+  height: 30px; /* Kích thước ảnh icon */
+  margin-right: 10px; /* Khoảng cách giữa icon và text */
+  margin-left: 10px;
+}
+
+.chat-text {
+  font-size: 1em;
+}
+
+/* Thêm animation cho bot khi đang chờ */
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+
+.loader {
+  height: 30px;
+  aspect-ratio: 2.5;
+  --_g: no-repeat radial-gradient(farthest-side, #ffffff 90%, #f9f9f900);
+  background: var(--_g), var(--_g), var(--_g), var(--_g);
+  background-size: 20% 50%;
+  animation: l43 1s infinite linear;
+}
+@keyframes l43 {
+  0% {
+    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 50%,
+      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 50%;
+  }
+  16.67% {
+    background-position: calc(0 * 100% / 3) 0, calc(1 * 100% / 3) 50%,
+      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 50%;
+  }
+  33.33% {
+    background-position: calc(0 * 100% / 3) 100%, calc(1 * 100% / 3) 0,
+      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 50%;
+  }
+  50% {
+    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 100%,
+      calc(2 * 100% / 3) 0, calc(3 * 100% / 3) 50%;
+  }
+  66.67% {
+    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 50%,
+      calc(2 * 100% / 3) 100%, calc(3 * 100% / 3) 0;
+  }
+  83.33% {
+    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 50%,
+      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 100%;
+  }
+  100% {
+    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 50%,
+      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 50%;
+  }
+}
+
 .chatbot-message {
   margin-top: 20px;
   display: flex;
@@ -76,39 +168,4 @@
 
 .send-button:hover {
   background-color: #ff7c16;
-}
-
-/* Các tin nhắn chat */
-.chat-display {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #f9f9f9;
-  overflow-y: auto;
-  max-height: 400px; /* Tùy chỉnh chiều cao */
-}
-
-.chat-bubble {
-  margin: 10px 0;
-  padding: 10px 15px;
-  border-radius: 15px;
-  max-width: 70%;
-  word-wrap: break-word;
-}
-
-.chat-you {
-  background-color: #e8f0fe;
-  color: #333;
-  align-self: flex-end;
-  border-top-right-radius: 0;
-}
-
-.chat-bot {
-  background-color: #8b0a50;
-  color: #fff;
-  align-self: flex-start;
-  border-top-left-radius: 0;
-}
-
-.chat-text {
-  font-size: 1em;
 }

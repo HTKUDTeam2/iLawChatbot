@@ -1,6 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "../styles/Chatbot.css";
-import chatbotImage from "../assets/images/chatbot.png";
+import chatbotImage from "../assets/images/chatbot.png"; // Thêm hình ảnh chatbot
+import userIcon from "../assets/images/user-icon.png"; // Thêm hình ảnh icon người dùng
+import botIcon from "../assets/images/bot-icon.png"; // Thêm hình ảnh icon bot
 
 const Chatbot = () => {
   const [inputValue, setInputValue] = useState(""); // State lưu giá trị của message-input
@@ -12,10 +14,6 @@ const Chatbot = () => {
   // Hàm xử lý khi nhấn câu hỏi gợi ý
   const handleQuestionClick = (question) => {
     setInputValue(question); // Cập nhật input với câu hỏi gợi ý
-    //TODO: Ẩn các thuộc tính thừa và chuyển ngay đến giao diên chatbot
-    // Nếu đã có API backend
-    /*setShowQuestions(false); // Ẩn câu hỏi gợi ý sau khi nhấn
-    setShowHeader(false);*/ // Ẩn header sau khi nhấn
 
     // Di chuyển con trỏ đến cuối câu hỏi gợi ý
     setTimeout(() => {
@@ -33,7 +31,7 @@ const Chatbot = () => {
       setMessages([
         ...messages,
         { sender: "you", text: inputValue },
-        { sender: "bot", text: "Vui lòng đợi 1 chút nhé ......." }, // Phản hồi bot
+        { sender: "bot", text: "Vui lòng đợi 1 chút nhé " }, // Phản hồi bot
       ]);
       setInputValue(""); // Reset input sau khi gửi
       setShowQuestions(false); // Ẩn các câu hỏi gợi ý khi gửi tin nhắn
@@ -48,31 +46,17 @@ const Chatbot = () => {
     }
   };
 
-  // Di chuyển con trỏ về cuối mỗi khi inputValue thay đổi
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.setSelectionRange(inputValue.length, inputValue.length);
-      inputRef.current.focus(); // Đảm bảo trường nhập liệu được focus
-    }
-  }, [inputValue]);
-
   return (
     <div className="chatbot-container">
-      {/* Ẩn phần header khi showHeader là false */}
       {showHeader && (
         <div className="chatbot-header">
-          <img
-            src={chatbotImage} // Thay bằng đường dẫn logo của bạn
-            alt="iLAW Logo"
-            className="chatbot-logo"
-          />
+          <img src={chatbotImage} alt="iLAW Logo" className="chatbot-logo" />
           <h1 className="chatbot-title">
             Xin chào, tôi có thể giúp gì được cho bạn ?
           </h1>
         </div>
       )}
 
-      {/* Khu vực hiển thị tin nhắn */}
       <div className="chat-display">
         {messages.map((msg, index) => (
           <div
@@ -81,7 +65,21 @@ const Chatbot = () => {
               msg.sender === "you" ? "chat-you" : "chat-bot"
             }`}
           >
-            <span className="chat-text">{msg.text}</span>
+            <img
+              src={msg.sender === "you" ? userIcon : botIcon}
+              alt={msg.sender}
+              className="chat-icon"
+            />
+            <span
+              className={`chat-text ${msg.sender === "bot" ? "waiting" : ""}`}
+            >
+              {msg.sender === "bot" &&
+              msg.text === "Vui lòng đợi 1 chút nhé " ? (
+                <div className="loader"></div> // Hiển thị loader khi bot đang chờ
+              ) : (
+                msg.text
+              )}
+            </span>
           </div>
         ))}
       </div>
@@ -150,16 +148,15 @@ const Chatbot = () => {
         </div>
       )}
 
-      {/* Khu vực nhập tin nhắn */}
       <div className="chatbot-message">
         <input
           type="text"
           placeholder="Message with iLaw"
           className="message-input"
-          value={inputValue} // Kết nối state inputValue với value của input
-          onChange={(e) => setInputValue(e.target.value)} // Cập nhật giá trị state khi nhập thủ công
-          onKeyDown={handleKeyDown} // Thêm sự kiện onKeyDown để gửi khi nhấn Enter
-          ref={inputRef} // Tham chiếu đến input để di chuyển con trỏ
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          ref={inputRef}
         />
         <button className="send-button" onClick={handleSendMessage}>
           ↑
