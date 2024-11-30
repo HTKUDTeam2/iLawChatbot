@@ -99,9 +99,8 @@
 .chat-text {
   font-size: 16px;
   line-height: 1.5;
-  color: #8b0a50; /* Màu chính */
+  color: #333; /* Màu chính */
   padding: 10px;
-  background-color: #f8f1f3; /* Màu nền nhạt để làm nổi bật màu chữ */
   border-radius: 8px;
   margin-top: 10px;
 }
@@ -111,17 +110,17 @@
 }
 
 .chat-text strong {
-  color: #8b0a50; /* Đảm bảo màu mạnh cho chữ "Answer" và "Trích dẫn nguồn" */
+  color: #fdfdfd; /* Đảm bảo màu mạnh cho chữ "Answer" và "Trích dẫn nguồn" */
 }
 
 .chat-text a {
-  color: #8b0a50; /* Màu của liên kết */
+  color: #ffffff; /* Màu của liên kết */
   text-decoration: none; /* Loại bỏ gạch chân mặc định */
   font-weight: bold;
 }
 
 .chat-text a:hover {
-  color: #b3006c; /* Màu liên kết khi hover */
+  color: #5979db; /* Màu liên kết khi hover */
   text-decoration: underline; /* Thêm gạch chân khi hover */
 }
 
@@ -131,6 +130,9 @@
 
 .chat-text ul li {
   margin-bottom: 5px;
+}
+.chat-bot .chat-text {
+  color: white;
 }
 
 /* Thêm animation cho bot khi đang chờ */
