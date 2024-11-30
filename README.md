@@ -20,7 +20,7 @@ iLawChatbot là một chatbot được xây dựng dựa trên mô hình RAG (Re
 Vào thư mục backend và thực hiện các bước sau: 
 1. Cài đặt environment:
 ```bash
-pip install -r requirements.txt
+pip install -r environments.txt
 ```
 2. Thêm file `.env` vào thư mục backend với nội dung:
 ``` bash
