@@ -3,6 +3,7 @@ import "../styles/Chatbot.css";
 import chatbotImage from "../assets/images/chatbot.png";
 import userIcon from "../assets/images/user-icon.png";
 import botIcon from "../assets/images/bot-icon.png";
+import ReactMarkdown from 'react-markdown';
 
 const Chatbot = () => {
    // State lưu giá trị của message-input
@@ -116,7 +117,7 @@ const Chatbot = () => {
                 <div className="loader"></div>
               ) : (
                 <>
-                  {msg.text}
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
                   {/* If we have response data, render the detailed info */}
                   {msg.sender === "bot" && msg.titles && (
                     <div>

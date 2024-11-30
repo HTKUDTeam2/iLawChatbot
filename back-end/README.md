@@ -13,7 +13,7 @@ OPENAI_API_KEY=your_openai_api_key
 
 - Tạo vectordatabase: 
 ```bash
- python .\handlers\chroma_loader.py .\data\So-huu-tri-tue-processed.csv vector_db
+python .\handlers\chroma_loader.py .\data\So-huu-tri-tue-processed.csv vector_db
 
 ```
 

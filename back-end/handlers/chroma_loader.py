@@ -66,7 +66,7 @@ def create_chroma_db(documents, persist_dir, batch_size=1000):
         model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
     
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap=1000)
     docs = text_splitter.split_documents(documents)
 
     print(f"Number of chunks: {len(docs)}")
