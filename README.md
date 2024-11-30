@@ -34,7 +34,7 @@ OPENAI_API_KEY=your_openai_api_key
 ```
 4. Khỏi chạy server:
 ```bash
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn main:app --host localhost --port 8000 --reload
 ```
 ### 2.2 Khởi chạy chương trình front-end React
 
