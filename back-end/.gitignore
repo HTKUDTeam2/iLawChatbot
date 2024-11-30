@@ -1,0 +1,7 @@
+
+.env
+
+# Ẩn nhưng thư mục __pycache__
+__pycache__/
+# Ẩn thư mục vector database
+vector_db/
