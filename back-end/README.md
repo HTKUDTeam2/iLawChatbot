@@ -4,7 +4,7 @@
 
 - Cài đặt environment:
 ```bash
-pip install -r requirements.txt
+pip install -r environments.txt
 ```
 - Thêm file `.env` vào thư mục backend với nội dung:
 ``` bash

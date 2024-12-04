@@ -4,9 +4,22 @@ import "../styles/CommonQA.css"; // Import file CSS
 // Dữ liệu FAQ
 const faqData = [
   {
-    question: "Hồ sơ đăng ký chuyển giao công nghệ bao gồm những giấy tờ gì?",
-    answer:
+    question:
       "Hồ sơ đăng ký chuyển giao công nghệ bao gồm những giấy tờ gì? Thời hạn cấp Giấy chứng nhận đăng ký chuyển giao công nghệ là bao lâu?",
+    answer: `
+      Hồ sơ đăng ký chuyển giao công nghệ bao gồm các giấy tờ sau:
+      <ul>
+        <li><strong>Đơn đăng ký chuyển giao công nghệ</strong>: Được kê khai theo mẫu quy định của cơ quan có thẩm quyền.</li>
+        <li><strong>Bản sao Giấy chứng nhận đăng ký doanh nghiệp</strong> của tổ chức/cá nhân thực hiện chuyển giao công nghệ.</li>
+        <li><strong>Bản sao hợp đồng chuyển giao công nghệ</strong> hoặc thỏa thuận giữa các bên, có thể bao gồm các điều khoản chi tiết về chuyển nhượng công nghệ, quyền sở hữu, và nghĩa vụ của các bên.</li>
+        <li><strong>Bản mô tả công nghệ</strong> chuyển giao: Bao gồm các thông tin về công nghệ, quá trình chuyển giao, và ứng dụng công nghệ.</li>
+        <li><strong>Bản sao các tài liệu liên quan</strong>: Giấy tờ chứng minh quyền sở hữu hoặc quyền sử dụng công nghệ của bên chuyển giao, chứng minh tính hợp pháp của công nghệ đó (nếu có).</li>
+        <li><strong>Chứng nhận sở hữu trí tuệ</strong> (nếu có): Ví dụ, bản quyền sáng chế, bằng sáng chế hoặc các tài liệu liên quan đến quyền sở hữu trí tuệ của công nghệ.</li>
+      </ul>
+
+      <strong>Thời gian cấp Giấy chứng nhận đăng ký chuyển giao công nghệ:</strong> Thời gian cấp Giấy chứng nhận thường dao động từ <strong>15 đến 30 ngày</strong> kể từ ngày cơ quan có thẩm quyền nhận đầy đủ hồ sơ hợp lệ. Tuy nhiên, trong một số trường hợp phức tạp, thời gian có thể lâu hơn. Cơ quan có thẩm quyền chính là Bộ Khoa học và Công nghệ hoặc các cơ quan được phân cấp.
+
+    `,
   },
   {
     question:

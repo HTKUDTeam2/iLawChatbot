@@ -20,7 +20,7 @@ iLawChatbot là một chatbot được xây dựng dựa trên mô hình RAG (Re
 Vào thư mục backend và thực hiện các bước sau: 
 1. Cài đặt environment:
 ```bash
-pip install -r requirements.txt
+pip install -r environments.txt
 ```
 2. Thêm file `.env` vào thư mục backend với nội dung:
 ``` bash
@@ -34,7 +34,7 @@ OPENAI_API_KEY=your_openai_api_key
 ```
 4. Khỏi chạy server:
 ```bash
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn main:app --host localhost --port 8000 --reload
 ```
 ### 2.2 Khởi chạy chương trình front-end React
 
