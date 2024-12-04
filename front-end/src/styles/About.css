@@ -1,14 +1,15 @@
+/* Tổng quan */
 .about {
   display: flex;
-  flex-direction: column; /* Sắp xếp theo chiều dọc */
-  align-items: flex-start; /* Căn lề trái */
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: flex-start;
-  text-align: left; /* Canh chữ từ bên trái */
-  padding: 20px;
+  padding: 2rem;
   box-sizing: border-box;
   min-height: 100vh;
 }
 
+/* Hiệu ứng gõ chữ */
 @keyframes typing {
   0% {
     width: 0;
@@ -21,84 +22,178 @@
 @keyframes blink {
   0%,
   100% {
-    border-color: transparent; /* Ẩn con trỏ */
+    border-color: transparent;
   }
   50% {
-    border-color: #971047; /* Hiển thị con trỏ */
+    border-color: #971047;
   }
 }
 
 .about h1 {
-  font-size: 2.5rem;
+  font-size: calc(1.5rem + 2vw); /* Tăng giảm theo màn hình */
   margin: 0;
-  margin-left: 175px;
-  margin-top: 50px;
+  padding: 0;
+  margin-top: 2rem;
+  margin-left: 2rem;
   overflow: hidden;
   border-right: 4px solid #971047;
   white-space: nowrap;
   display: inline-block;
-  width: 0;
-  animation: typing 4s steps(30) infinite, blink 0.75s step-end infinite; /* Áp dụng hiệu ứng glow */
+  animation: typing 4s steps(30) infinite, blink 0.75s step-end infinite;
+}
+
+.about h1 span {
+  color: #971047;
+  font-weight: bold;
 }
 
 .about p {
-  font-size: 1.5rem;
-  margin: 10px 0 20px 50px;
+  font-size: 1.2rem;
+  margin: 0 0 2rem 5%;
   color: #000000;
   font-weight: regular;
 }
 
 .about .slogan {
-  margin-left: 125px;
   color: #971047;
-  margin-top: 50px;
+  margin-top: 3rem;
+  margin-left: 5rem;
+  padding: 0;
   font-weight: bold;
 }
-
+/* Container ảnh và text */
 .about-image-container {
   display: flex;
-  margin-top: 50px;
-  flex-direction: row; /* Sắp xếp theo hàng ngang */
-  align-items: flex-start; /* Căn từ đầu hàng */
-  gap: 0px; /* Khoảng cách giữa text và ảnh */
+  flex-direction: row;
+  gap: 4rem;
   width: 100%;
+  margin-top: 2rem; /* Giảm khoảng cách quá lớn */
+  flex-wrap: wrap; /* Cho phép các phần tử xuống dòng */
+  align-items: flex-start; /* Căn bắt đầu */
+  position: relative; /* Đảm bảo có không gian cho absolute positioning */
 }
 
-/* .about-intro {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Căn từ đầu đoạn văn 
-  text-align: left; /* Canh văn bản sang trái 
-  font-size: 1.2rem;
-  color: #333;
-  max-width: 50%; /* Chiều rộng tối đa của nội dung text 
-} 
-*/
-
 .about-intro {
-  width: 100%; /* Đảm bảo chiều rộng đủ lớn */
-  overflow: visible; /* Hiển thị toàn bộ nội dung */
-  margin-left: 50px;
+  flex: 1;
+  text-align: left;
+  font-size: 1rem;
+  color: #333;
+  max-width: 50%; /* Giới hạn chiều rộng tối đa */
+  padding: 1rem;
 }
 
 .about-image {
-  margin-top: -215px; /* Dời ảnh lên trên */
-  margin-left: -500px;
+  position: absolute; /* Sử dụng absolute để di chuyển ảnh */
+  top: -10rem; /* Di chuyển ảnh lên trên */
+  left: 50rem; /* Di chuyển ảnh sang trái */
+  max-width: 300px; /* Đảm bảo kích thước ảnh không quá lớn */
+  height: auto;
 }
 
 .about-image img {
   width: 100%;
-  max-width: 300px; /* Giới hạn chiều rộng tối đa của ảnh */
   height: auto;
+  object-fit: cover;
   border-radius: 10px;
 }
 
 .about-text-box {
-  white-space: nowrap; /* Giữ chữ trên cùng một dòng */
-  display: inline-block; /* Tự động co theo nội dung */
-  max-width: 100%; /* Giới hạn chiều rộng nếu cần */
-  display: inline-block; /* Hộp vừa với nội dung */
-  padding: 20px;
-  border: 1px solid #000000; /* Viền hộp */
-  border-radius: 5px; /* Bo góc */
+  border: 1px solid #000;
+  padding: 1.5rem;
+  max-width: 90%;
+  margin: auto;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* MEDIA QUERIES - Responsive */
+@media (max-width: 1024px) {
+  .about h1 {
+    font-size: 2rem;
+    margin-top: 5%;
+  }
+
+  .about p {
+    font-size: 1rem;
+    margin-left: 5%;
+  }
+
+  .about .slogan {
+    margin-left: 5%;
+    font-size: 1.2rem;
+  }
+
+  .about-image-container {
+    gap: 3%;
+  }
+
+  .about-intro {
+    max-width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .about-image {
+    left: 5rem; /* Điều chỉnh lại vị trí ảnh trên màn hình nhỏ */
+    top: -5rem; /* Điều chỉnh vị trí ảnh nếu cần */
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about h1 {
+    font-size: 1.8rem;
+    margin-top: 3%;
+  }
+
+  .about p {
+    font-size: 0.9rem;
+  }
+
+  .about .slogan {
+    font-size: 1rem;
+  }
+
+  .about-image-container {
+    flex-direction: column; /* Sắp xếp theo cột */
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .about-intro {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .about-image {
+    position: relative; /* Hủy bỏ absolute trong trường hợp màn hình nhỏ */
+    top: 0; /* Đặt ảnh ở vị trí ban đầu */
+    left: 0;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about h1 {
+    font-size: 1.5rem;
+  }
+
+  .about p {
+    font-size: 0.8rem;
+  }
+
+  .about .slogan {
+    font-size: 0.9rem;
+  }
+
+  .about-text-box {
+    font-size: 0.9rem;
+  }
+
+  .about-image {
+    position: relative; /* Di chuyển lại ảnh với positioning relative trên màn hình nhỏ */
+    top: 0;
+    left: 0;
+    max-width: 150px;
+  }
 }

@@ -1,13 +1,15 @@
+/* Tổng quan */
 .home {
   display: flex;
-  flex-direction: column; /* Sắp xếp theo chiều dọc */
-  align-items: flex-start; /* Căn lề trái */
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: flex-start;
-  text-align: left; /* Canh chữ từ bên trái */
-  padding: 20px;
+  padding: 2rem;
   box-sizing: border-box;
   min-height: 100vh;
 }
+
+/* Hiệu ứng gõ chữ */
 @keyframes typing {
   0% {
     width: 0;
@@ -20,82 +22,178 @@
 @keyframes blink {
   0%,
   100% {
-    border-color: transparent; /* Ẩn con trỏ */
+    border-color: transparent;
   }
   50% {
-    border-color: #971047; /* Hiển thị con trỏ */
+    border-color: #971047;
   }
 }
 
 .home h1 {
-  font-size: 2.5rem;
+  font-size: calc(1.5rem + 2vw); /* Tăng giảm theo màn hình */
   margin: 0;
-  margin-left: 175px;
-  margin-top: 100px;
+  padding: 0;
+  margin-top: 2rem;
+  margin-left: 2rem;
   overflow: hidden;
   border-right: 4px solid #971047;
   white-space: nowrap;
   display: inline-block;
-  width: 0;
-  animation: typing 4s steps(30) infinite, blink 0.75s step-end infinite; /* Áp dụng hiệu ứng glow */
+  animation: typing 4s steps(30) infinite, blink 0.75s step-end infinite;
 }
 
 .home h1 span {
-  color: #971047; /* Màu sắc mặc định */
+  color: #971047;
   font-weight: bold;
 }
 
 .home p {
-  font-size: 1.5rem;
-  margin: 10px 0 20px 50px;
+  font-size: 1.2rem;
+  margin: 0 0 2rem 5%;
   color: #000000;
   font-weight: regular;
 }
 
 .home .slogan {
-  margin-left: 125px;
   color: #971047;
-  margin-top: 50px;
+  margin-top: 3rem;
+  margin-left: 5rem;
+  padding: 0;
   font-weight: bold;
 }
-
+/* Container ảnh và text */
 .home-image-container {
   display: flex;
-  margin-top: 50px;
-  margin-left: 50px;
-  flex-direction: row; /* Sắp xếp theo hàng ngang */
-  align-items: flex-start; /* Căn từ đầu hàng */
-  gap: 150px; /* Khoảng cách giữa text và ảnh */
+  flex-direction: row;
+  gap: 4rem;
   width: 100%;
+  margin-top: 2rem; /* Giảm khoảng cách quá lớn */
+  flex-wrap: wrap; /* Cho phép các phần tử xuống dòng */
+  align-items: flex-start; /* Căn bắt đầu */
+  position: relative; /* Đảm bảo có không gian cho absolute positioning */
 }
 
 .home-intro {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Căn từ đầu đoạn văn */
-  text-align: left; /* Canh văn bản sang trái */
-  font-size: 1.2rem;
+  flex: 1;
+  text-align: left;
+  font-size: 1rem;
   color: #333;
-  max-width: 50%; /* Chiều rộng tối đa của nội dung text */
+  max-width: 50%; /* Giới hạn chiều rộng tối đa */
+  padding: 1rem;
 }
 
 .home-image {
-  margin-top: -225px; /* Dời ảnh lên trên */
+  position: absolute; /* Sử dụng absolute để di chuyển ảnh */
+  top: -10rem; /* Di chuyển ảnh lên trên */
+  left: 50rem; /* Di chuyển ảnh sang trái */
+  max-width: 300px; /* Đảm bảo kích thước ảnh không quá lớn */
+  height: auto;
 }
 
 .home-image img {
   width: 100%;
-  max-width: 300px; /* Giới hạn chiều rộng tối đa của ảnh */
   height: auto;
+  object-fit: cover;
   border-radius: 10px;
 }
 
-.text-box {
-  border: 1px solid #000; /* Đặt viền xung quanh hộp */
-  padding: 20px; /* Khoảng cách giữa viền và nội dung */
-  max-width: 80%; /* Đặt chiều rộng tối đa của hộp */
-  margin: 20px auto; /* Căn giữa hộp trong container */
-  font-size: 1.2rem; /* Kích thước chữ */
-  line-height: 1.5; /* Khoảng cách giữa các dòng */
-  color: #333; /* Màu chữ */
+.home-text-box {
+  border: 1px solid #000;
+  padding: 1.5rem;
+  max-width: 90%;
+  margin: auto;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* MEDIA QUERIES - Responsive */
+@media (max-width: 1024px) {
+  .home h1 {
+    font-size: 2rem;
+    margin-top: 5%;
+  }
+
+  .home p {
+    font-size: 1rem;
+    margin-left: 5%;
+  }
+
+  .home .slogan {
+    margin-left: 5%;
+    font-size: 1.2rem;
+  }
+
+  .home-image-container {
+    gap: 3%;
+  }
+
+  .home-intro {
+    max-width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .home-image {
+    left: 5rem; /* Điều chỉnh lại vị trí ảnh trên màn hình nhỏ */
+    top: -5rem; /* Điều chỉnh vị trí ảnh nếu cần */
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home h1 {
+    font-size: 1.8rem;
+    margin-top: 3%;
+  }
+
+  .home p {
+    font-size: 0.9rem;
+  }
+
+  .home .slogan {
+    font-size: 1rem;
+  }
+
+  .home-image-container {
+    flex-direction: column; /* Sắp xếp theo cột */
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .home-intro {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .home-image {
+    position: relative; /* Hủy bỏ absolute trong trường hợp màn hình nhỏ */
+    top: 0; /* Đặt ảnh ở vị trí ban đầu */
+    left: 0;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home h1 {
+    font-size: 1.5rem;
+  }
+
+  .home p {
+    font-size: 0.8rem;
+  }
+
+  .home .slogan {
+    font-size: 0.9rem;
+  }
+
+  .home-text-box {
+    font-size: 0.9rem;
+  }
+
+  .home-image {
+    position: relative; /* Di chuyển lại ảnh với positioning relative trên màn hình nhỏ */
+    top: 0;
+    left: 0;
+    max-width: 150px;
+  }
 }

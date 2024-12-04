@@ -1,34 +1,33 @@
-/* Container styles */
+/* Base Styles */
 .faq-container {
-  max-width: 800px;
+  max-width: clamp(600px, 80%, 1000px); /* Container linh hoạt */
   margin: 0 auto;
+  padding: 10px;
   font-family: Arial, sans-serif;
 }
 
-/* Header styles */
 .faq-header {
+  font-size: clamp(20px, 2vw, 36px); /* Tiêu đề linh hoạt */
+  margin-bottom: 20px;
   text-align: center;
   color: #990033;
-  margin-bottom: 20px;
-  font-size: 24px;
 }
 
-/* FAQ item styles */
 .faq-item {
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 15px; /* Khoảng cách giữa các mục */
+  padding: clamp(10px, 1.5vw, 20px); /* Padding linh hoạt */
   overflow: hidden;
 }
 
-/* Question button styles */
 .faq-question {
   width: 100%;
-  padding: 15px;
+  padding: clamp(10px, 1.5vw, 20px); /* Padding linh hoạt */
   text-align: left;
   background: #f7f7f7;
   border: none;
-  font-size: 16px;
+  font-size: clamp(14px, 1.5vw, 20px); /* Font size linh hoạt */
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -40,15 +39,14 @@
   background-color: #e0e0e0;
 }
 
-/* Answer styles */
 .faq-answer {
-  padding: 15px;
+  padding: clamp(10px, 1.5vw, 20px); /* Padding linh hoạt */
   background: #fff;
   color: #333;
+  font-size: clamp(12px, 1.2vw, 18px); /* Font size linh hoạt */
   line-height: 1.6;
 }
 
-/* Link styling inside the answer */
 .faq-link {
   color: #990033;
   text-decoration: underline;
@@ -58,8 +56,78 @@
   text-decoration: none;
 }
 
-/* Highlighted text */
 .highlight-red {
   color: red;
   font-weight: bold;
+}
+
+/* Responsive Styles for Larger Screens */
+@media (min-width: 1200px) {
+  .faq-container {
+    max-width: 1200px;
+    padding: 20px;
+  }
+
+  .faq-item {
+    margin-bottom: 20px; /* Tăng khoảng cách giữa các mục */
+  }
+
+  .faq-question {
+    padding: 25px; /* Tăng thêm padding */
+  }
+
+  .faq-answer {
+    line-height: 1.8; /* Tăng khoảng cách dòng */
+  }
+}
+
+/* Scaling for Very Large Screens */
+@media (min-width: 1600px) {
+  html {
+    font-size: 18px; /* Tăng font-size tổng thể */
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .faq-container {
+    max-width: 100%; /* Chiếm hết chiều rộng màn hình nhỏ */
+    padding: 10px;
+  }
+
+  .faq-header {
+    font-size: 20px; /* Giảm kích thước tiêu đề */
+    margin-bottom: 15px;
+  }
+
+  .faq-question {
+    font-size: 14px; /* Giảm kích thước font */
+    padding: 10px; /* Giảm padding */
+  }
+
+  .faq-answer {
+    font-size: 14px; /* Giảm kích thước font cho câu trả lời */
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-container {
+    padding: 5px; /* Giảm padding để tối ưu không gian */
+  }
+
+  .faq-header {
+    font-size: 18px; /* Giảm kích thước tiêu đề hơn nữa */
+    margin-bottom: 10px;
+  }
+
+  .faq-question {
+    font-size: 12px; /* Giảm kích thước font nhỏ nhất */
+    padding: 8px; /* Giảm padding hơn nữa */
+  }
+
+  .faq-answer {
+    font-size: 12px; /* Phù hợp với màn hình nhỏ */
+    padding: 10px;
+  }
 }

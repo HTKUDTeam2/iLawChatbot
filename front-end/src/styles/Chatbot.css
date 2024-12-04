@@ -1,30 +1,29 @@
 /* Cập nhật kiểu dáng chung cho chatbot */
 .chatbot-container {
   font-family: Arial, sans-serif;
-  padding: 2vw; /* Padding linh động với kích thước màn hình */
+  padding: 2rem; /* Padding linh động với font-size gốc */
   background-color: #fff;
-  max-width: 90vw; /* Chiếm 90% chiều rộng màn hình */
-  max-height: 80vh; /* Chiếm 80% chiều cao màn hình */
-  margin: 0 auto;
-  margin-top: 5vh; /* Đặt khoảng cách từ trên cùng bằng 5% chiều cao màn hình */
+  width: 90%; /* Chiếm 90% chiều rộng màn hình */
+  height: 80vh; /* Chiếm 80% chiều cao màn hình */
+  margin: 5vh auto 0 auto; /* Căn giữa với khoảng cách từ trên */
   border: 2px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  overflow: auto; /* Tránh bị tràn nếu nội dung quá lớn */
+  overflow: hidden; /* Giới hạn nội dung trong khung */
 }
 
 .chatbot-header {
   text-align: center;
-  padding-bottom: 20px;
+  padding-bottom: 1.5rem;
 }
 
 .chatbot-logo {
   height: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 0.5rem;
 }
 
 .chatbot-title {
-  font-size: 20px;
+  font-size: calc(1.5rem + 1vw); /* Linh động với kích thước màn hình */
   font-weight: bold;
   color: #9c0038;
 }
@@ -32,19 +31,20 @@
 .chatbot-questions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 0.5rem;
   justify-content: center;
+  margin-top: -20rem;
 }
 
 .question-button {
   background-color: #9c0038;
   color: #fff;
   border: none;
-  padding: 10px 15px;
+  padding: 0.8rem 1rem;
   border-radius: 5px;
   cursor: pointer;
-  flex: 1 1 calc(50% - 20px);
-  max-width: calc(50% - 20px);
+  flex: 1 1 calc(50% - 1rem); /* Chiếm 50% không gian với khoảng cách */
+  max-width: calc(50% - 1rem);
   text-align: center;
 }
 
@@ -55,19 +55,19 @@
 /* Khu vực hiển thị tin nhắn */
 .chat-display {
   flex-grow: 1;
-  padding: 20px;
+  padding: 1rem;
   background-color: #f9f9f9;
   overflow-y: auto;
-  max-height: 400px;
+  height: 50vh; /* Giới hạn chiều cao linh động */
+  max-height: 60vh;
 }
 
 .chat-bubble {
-  margin: 10px 0;
-  padding: 10px 15px;
+  margin: 0.5rem 0;
+  padding: 0.8rem 1rem;
   border-radius: 15px;
   display: flex;
   align-items: center;
-  max-width: 70%;
   word-wrap: break-word;
 }
 
@@ -76,8 +76,7 @@
   color: #333;
   align-self: flex-end;
   border-top-right-radius: 0;
-  flex-direction: row-reverse; /* Cho ảnh icon bên phải text */
-  max-width: 100%;
+  flex-direction: row-reverse; /* Icon bên phải text */
 }
 
 .chat-bot {
@@ -85,101 +84,82 @@
   color: #fff;
   align-self: flex-start;
   border-top-left-radius: 0;
-  max-width: 100%;
-  margin-top: 50px;
-  margin-bottom: 50px;
 }
 
 .chat-icon {
-  height: 30px; /* Kích thước ảnh icon */
-  margin-right: 10px; /* Khoảng cách giữa icon và text */
-  margin-left: 10px;
+  height: 2rem;
+  margin: 0 0.5rem;
 }
 
 .chat-text {
-  font-size: 16px;
+  font-size: calc(1rem + 0.2vw); /* Linh động với kích thước màn hình */
   line-height: 1.5;
-  color: #333; /* Màu chính */
-  padding: 10px;
+  color: #333;
+  padding: 0.5rem;
   border-radius: 8px;
-  margin-top: 10px;
 }
 
 .chat-text p {
-  margin: 0 0 10px;
+  margin: 0 0 0.5rem;
 }
 
 .chat-text strong {
-  color: #fdfdfd; /* Đảm bảo màu mạnh cho chữ "Answer" và "Trích dẫn nguồn" */
+  color: #fdfdfd;
 }
 
 .chat-text a {
-  color: #ffffff; /* Màu của liên kết */
-  text-decoration: none; /* Loại bỏ gạch chân mặc định */
+  color: #ffffff;
+  text-decoration: none;
   font-weight: bold;
 }
 
 .chat-text a:hover {
-  color: #5979db; /* Màu liên kết khi hover */
-  text-decoration: underline; /* Thêm gạch chân khi hover */
+  color: #5979db;
+  text-decoration: underline;
 }
 
 .chat-text ul {
-  padding-left: 20px;
+  padding-left: 1rem;
 }
 
 .chat-text ul li {
-  margin-bottom: 5px;
+  margin-bottom: 0.3rem;
 }
+
 .chat-bot .chat-text {
   color: white;
 }
 
-/* Thêm animation cho bot khi đang chờ */
-/* HTML: <div class="loader"></div> */
-/* HTML: <div class="loader"></div> */
-
+/* Animation loader */
 .loader {
   height: 30px;
   aspect-ratio: 2.5;
   --_g: no-repeat radial-gradient(farthest-side, #ffffff 90%, #f9f9f900);
   background: var(--_g), var(--_g), var(--_g), var(--_g);
   background-size: 20% 50%;
-  animation: l43 1s infinite linear;
+  animation: l43 2s infinite linear;
 }
+
 @keyframes l43 {
   0% {
-    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 50%,
-      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 50%;
+    background-position: 0% 50%, 25% 50%, 50% 50%, 75% 50%;
   }
-  16.67% {
-    background-position: calc(0 * 100% / 3) 0, calc(1 * 100% / 3) 50%,
-      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 50%;
-  }
-  33.33% {
-    background-position: calc(0 * 100% / 3) 100%, calc(1 * 100% / 3) 0,
-      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 50%;
+  25% {
+    background-position: 25% 50%, 50% 50%, 75% 50%, 100% 50%;
   }
   50% {
-    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 100%,
-      calc(2 * 100% / 3) 0, calc(3 * 100% / 3) 50%;
+    background-position: 50% 50%, 75% 50%, 100% 50%, 25% 50%;
   }
-  66.67% {
-    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 50%,
-      calc(2 * 100% / 3) 100%, calc(3 * 100% / 3) 0;
-  }
-  83.33% {
-    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 50%,
-      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 100%;
+  75% {
+    background-position: 75% 50%, 100% 50%, 25% 50%, 50% 50%;
   }
   100% {
-    background-position: calc(0 * 100% / 3) 50%, calc(1 * 100% / 3) 50%,
-      calc(2 * 100% / 3) 50%, calc(3 * 100% / 3) 50%;
+    background-position: 0% 50%, 25% 50%, 50% 50%, 75% 50%;
   }
 }
 
 .chatbot-message {
-  margin-top: 20px;
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,22 +167,55 @@
 
 .message-input {
   flex: 1;
-  padding: 10px;
+  padding: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: calc(1rem + 0.2vw); /* Linh động với kích thước màn hình */
 }
 
 .send-button {
   background-color: #9c0038;
   color: #fff;
   border: none;
-  padding: 10px 15px;
-  margin-left: 10px;
-  border-radius: 50%;
+  width: 3rem; /* Đặt chiều rộng linh động */
+  height: 3rem; /* Đặt chiều cao linh động */
+  padding: 0.5rem; /* Giữ padding nhỏ */
+  margin-left: 0.5rem;
+  border-radius: 50%; /* Giữ nút tròn */
   cursor: pointer;
+  font-size: calc(1.2rem + 0.3vw); /* Linh động với kích thước màn hình */
 }
 
 .send-button:hover {
   background-color: #ff7c16;
+}
+
+/* Media Queries để hỗ trợ các kích thước màn hình khác nhau */
+@media (max-width: 768px) {
+  .chatbot-container {
+    width: 95%; /* Chiếm toàn bộ chiều rộng màn hình nhỏ hơn */
+    height: 85vh; /* Chiều cao tăng thêm */
+    padding: 1rem;
+  }
+
+  .chat-display {
+    height: 40vh;
+    max-height: 50vh;
+  }
+
+  .question-button {
+    flex: 1 1 100%; /* Trải rộng toàn bộ chiều ngang */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatbot-title {
+    font-size: calc(1.2rem + 1vw); /* Tăng scale cho font-size */
+  }
+
+  .send-button {
+    padding: 0.5rem;
+    font-size: calc(1.2rem + 0.5vw); /* Tăng font-size cho send-button */
+  }
 }

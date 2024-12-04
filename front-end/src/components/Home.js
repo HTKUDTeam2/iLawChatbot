@@ -13,7 +13,7 @@ const Home = () => {
       </div>
       <div className="home-image-container">
         <div className="home-intro">
-          <p className="text-box">
+          <p className="home-text-box">
             Meet <strong>iLaw</strong>, your smart chatbot for all things
             intellectual property! From copyright to patents,{" "}
             <strong>iLaw</strong> delivers quick, accurate answers to your IP
