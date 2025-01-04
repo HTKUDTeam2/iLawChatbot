@@ -1,55 +1,71 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../styles/Chatbot.css";
 import chatbotImage from "../assets/images/chatbot.png";
 import userIcon from "../assets/images/user-icon.png";
 import botIcon from "../assets/images/bot-icon.png";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 
 const Chatbot = () => {
-   // State lưu giá trị của message-input
   const [inputValue, setInputValue] = useState("");
-  // State lưu danh sách tin nhắn
   const [messages, setMessages] = useState([]);
-   // State kiểm soát việc hiển thị câu hỏi gợi ý
   const [showQuestions, setShowQuestions] = useState(true);
-  const [showHeader, setShowHeader] = useState(true); 
-   // State lưu kết quả từ API
+  const [showHeader, setShowHeader] = useState(true);
   const [response, setResponse] = useState(null);
-   // Tham chiếu đến input để kiểm soát con trỏ
   const inputRef = useRef(null);
+  const [isTyping, setIsTyping] = useState(false);
+  const [displayText, setDisplayText] = useState("");
+  const chatDisplayRef = useRef(null);
 
-  // Hàm xử lý khi nhấn câu hỏi gợi ý
   const handleQuestionClick = (question) => {
-    // Cập nhật input với câu hỏi gợi ý
-    setInputValue(question); 
-
-    // Di chuyển con trỏ đến cuối câu hỏi gợi ý
+    setInputValue(question);
     setTimeout(() => {
       if (inputRef.current) {
         inputRef.current.setSelectionRange(question.length, question.length);
-        inputRef.current.focus(); 
+        inputRef.current.focus();
       }
     }, 0);
   };
 
-  // Hàm gửi tin nhắn và gọi API
+  const typeMessage = async (text, delay = 100) => {
+    setIsTyping(true);
+    const words = text.split(" ");
+    let currentText = "";
+    let wordIndex = 0;
+
+    while (wordIndex < words.length) {
+      // Random number of words (1-3) to show each time
+      const wordsToShow = Math.floor(Math.random() * 3) + 1;
+      const chunk = words.slice(wordIndex, wordIndex + wordsToShow).join(" ");
+
+      currentText += (wordIndex > 0 ? " " : "") + chunk;
+      setDisplayText(currentText);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+
+      wordIndex += wordsToShow;
+    }
+
+    setIsTyping(false);
+  };
+
+  useEffect(() => {
+    if (chatDisplayRef.current) {
+      chatDisplayRef.current.scrollTop = chatDisplayRef.current.scrollHeight;
+    }
+  }, [messages, displayText]);
+
   const handleSendMessage = async () => {
     if (inputValue.trim()) {
-      // Thêm tin nhắn của người dùng vào danh sách tin nhắn
       const newMessages = [
         ...messages,
         { sender: "you", text: inputValue },
         { sender: "bot", text: "Vui lòng đợi 1 chút nhé " },
       ];
-      // Cập nhật danh sách tin nhắn và clear input
       setMessages(newMessages);
-      setInputValue("")
-      // Ẩn câu hỏi gợi ý
+      setInputValue("");
       setShowQuestions(false);
       setShowHeader(false);
       setResponse(null);
 
-      // Gọi API để lấy câu trả lời
       try {
         const apiResponse = await fetch("http://localhost:8000/chatbot/ask", {
           method: "POST",
@@ -63,17 +79,16 @@ const Chatbot = () => {
 
         if (apiResponse.ok) {
           const data = await apiResponse.json();
-          // Replace the "waiting" message with the actual response from the API
-          const updatedMessages = newMessages.map(msg =>
-            msg.text === "Vui lòng đợi 1 chút nhé " 
-              ? { sender: "bot", text: data.answer, titles: data.titles, links: data.links }
-              : msg
-          );
-          // Cập nhật danh sách tin nhắn với câu trả lời từ API
-          setMessages(updatedMessages);
+          const updatedMessages = newMessages.slice(0, -1);
+          const newBotMessage = {
+            sender: "bot",
+            text: data.answer,
+            titles: data.titles,
+            links: data.links,
+          };
+          setMessages([...updatedMessages, newBotMessage]);
+          await typeMessage(data.answer);
           setResponse(data);
-        } else {
-          console.error("API call failed");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -81,7 +96,6 @@ const Chatbot = () => {
     }
   };
 
-  // Hàm xử lý khi nhấn phím Enter
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && inputValue.trim()) {
       handleSendMessage();
@@ -99,50 +113,61 @@ const Chatbot = () => {
         </div>
       )}
 
-      <div className="chat-display">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`chat-bubble ${msg.sender === "you" ? "chat-you" : "chat-bot"}`}
-          >
-            <img
-              src={msg.sender === "you" ? userIcon : botIcon}
-              alt={msg.sender}
-              className="chat-icon"
-            />
-            <span
-              className={`chat-text ${msg.sender === "bot" && msg.text === "Vui lòng đợi 1 chút nhé " ? "waiting" : ""}`}
+      {!showQuestions && (
+        <div className="chat-display" ref={chatDisplayRef}>
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={`chat-bubble ${
+                msg.sender === "you" ? "chat-you" : "chat-bot"
+              }`}
             >
-              {msg.sender === "bot" && msg.text === "Vui lòng đợi 1 chút nhé " ? (
-                <div className="loader"></div>
-              ) : (
-                <>
-                  <ReactMarkdown>{msg.text}</ReactMarkdown>
-                  {/* If we have response data, render the detailed info */}
-                  {msg.sender === "bot" && msg.titles && (
-                    <div>
-                      <br />
-                      <br />
-                      <p><strong>Trích dẫn nguồn:</strong></p>
-                      <ul>
-                        {msg.titles.map((title, index) => (
-                          <li key={index}>
-                            <a href={msg.links[index]} target="_blank" rel="noopener noreferrer">
-                              {title}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </>
-              )}
-            </span>
-          </div>
-        ))}
-      </div>
+              <img
+                src={msg.sender === "you" ? userIcon : botIcon}
+                alt={msg.sender}
+                className="chat-icon"
+              />
+              <span className="chat-text">
+                {msg.sender === "bot" &&
+                msg.text === "Vui lòng đợi 1 chút nhé " ? (
+                  <div className="loader"></div>
+                ) : (
+                  <>
+                    <ReactMarkdown>
+                      {msg.sender === "bot" && index === messages.length - 1
+                        ? displayText
+                        : msg.text}
+                    </ReactMarkdown>
+                    {msg.sender === "bot" &&
+                      msg.titles &&
+                      (!isTyping || index !== messages.length - 1) && (
+                        <div className="references-section">
+                          <p>
+                            <strong>Trích dẫn nguồn:</strong>
+                          </p>
+                          <ul>
+                            {msg.titles.map((title, idx) => (
+                              <li key={idx}>
+                                <a
+                                  href={msg.links[idx]}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {title}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                  </>
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* Khu vực câu hỏi gợi ý, chỉ hiển thị nếu showQuestions là true */}
       {showQuestions && (
         <div className="chatbot-questions">
           <button
@@ -207,19 +232,19 @@ const Chatbot = () => {
       )}
 
       <div className="chatbot-message">
-      <input
-        type="text"
-        placeholder="Message with iLaw"
-        className="message-input"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        ref={inputRef}
-      />
-      <button className="send-button" onClick={handleSendMessage}>
-        ↑
-      </button>
-    </div>
+        <input
+          type="text"
+          placeholder="Message with iLaw"
+          className="message-input"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          ref={inputRef}
+        />
+        <button className="send-button" onClick={handleSendMessage}>
+          ↑
+        </button>
+      </div>
     </div>
   );
 };
