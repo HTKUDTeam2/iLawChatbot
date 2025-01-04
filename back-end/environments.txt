@@ -1,0 +1,12 @@
+fastapi
+langchain
+langchain_chroma
+langchain_community
+langchain_huggingface
+langchain_core
+langchain_openai
+sentence-transformers
+tqdm
+python-dotenv
+pandas
+rank_bm25

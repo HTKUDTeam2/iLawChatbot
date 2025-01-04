@@ -1,0 +1,221 @@
+/* Cập nhật kiểu dáng chung cho chatbot */
+.chatbot-container {
+  font-family: Arial, sans-serif;
+  padding: 2rem; /* Padding linh động với font-size gốc */
+  background-color: #fff;
+  width: 90%; /* Chiếm 90% chiều rộng màn hình */
+  height: 80vh; /* Chiếm 80% chiều cao màn hình */
+  margin: 5vh auto 0 auto; /* Căn giữa với khoảng cách từ trên */
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Giới hạn nội dung trong khung */
+}
+
+.chatbot-header {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+
+.chatbot-logo {
+  height: 50px;
+  margin-bottom: 0.5rem;
+}
+
+.chatbot-title {
+  font-size: calc(1.5rem + 1vw); /* Linh động với kích thước màn hình */
+  font-weight: bold;
+  color: #9c0038;
+}
+
+.chatbot-questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: -20rem;
+}
+
+.question-button {
+  background-color: #9c0038;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1 1 calc(50% - 1rem); /* Chiếm 50% không gian với khoảng cách */
+  max-width: calc(50% - 1rem);
+  text-align: center;
+}
+
+.question-button:hover {
+  background-color: #ff7c16;
+}
+
+/* Khu vực hiển thị tin nhắn */
+.chat-display {
+  flex-grow: 1;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  height: 50vh; /* Giới hạn chiều cao linh động */
+  max-height: 60vh;
+}
+
+.chat-bubble {
+  margin: 0.5rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  word-wrap: break-word;
+}
+
+.chat-you {
+  background-color: #e8f0fe;
+  color: #333;
+  align-self: flex-end;
+  border-top-right-radius: 0;
+  flex-direction: row-reverse; /* Icon bên phải text */
+}
+
+.chat-bot {
+  background-color: #8b0a50;
+  color: #fff;
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
+
+.chat-icon {
+  height: 2rem;
+  margin: 0 0.5rem;
+}
+
+.chat-text {
+  font-size: calc(1rem + 0.2vw); /* Linh động với kích thước màn hình */
+  line-height: 1.5;
+  color: #333;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.chat-text p {
+  margin: 0 0 0.5rem;
+}
+
+.chat-text strong {
+  color: #fdfdfd;
+}
+
+.chat-text a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.chat-text a:hover {
+  color: #5979db;
+  text-decoration: underline;
+}
+
+.chat-text ul {
+  padding-left: 1rem;
+}
+
+.chat-text ul li {
+  margin-bottom: 0.3rem;
+}
+
+.chat-bot .chat-text {
+  color: white;
+}
+
+/* Animation loader */
+.loader {
+  height: 30px;
+  aspect-ratio: 2.5;
+  --_g: no-repeat radial-gradient(farthest-side, #ffffff 90%, #f9f9f900);
+  background: var(--_g), var(--_g), var(--_g), var(--_g);
+  background-size: 20% 50%;
+  animation: l43 2s infinite linear;
+}
+
+@keyframes l43 {
+  0% {
+    background-position: 0% 50%, 25% 50%, 50% 50%, 75% 50%;
+  }
+  25% {
+    background-position: 25% 50%, 50% 50%, 75% 50%, 100% 50%;
+  }
+  50% {
+    background-position: 50% 50%, 75% 50%, 100% 50%, 25% 50%;
+  }
+  75% {
+    background-position: 75% 50%, 100% 50%, 25% 50%, 50% 50%;
+  }
+  100% {
+    background-position: 0% 50%, 25% 50%, 50% 50%, 75% 50%;
+  }
+}
+
+.chatbot-message {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: calc(1rem + 0.2vw); /* Linh động với kích thước màn hình */
+}
+
+.send-button {
+  background-color: #9c0038;
+  color: #fff;
+  border: none;
+  width: 3rem; /* Đặt chiều rộng linh động */
+  height: 3rem; /* Đặt chiều cao linh động */
+  padding: 0.5rem; /* Giữ padding nhỏ */
+  margin-left: 0.5rem;
+  border-radius: 50%; /* Giữ nút tròn */
+  cursor: pointer;
+  font-size: calc(1.2rem + 0.3vw); /* Linh động với kích thước màn hình */
+}
+
+.send-button:hover {
+  background-color: #ff7c16;
+}
+
+/* Media Queries để hỗ trợ các kích thước màn hình khác nhau */
+@media (max-width: 768px) {
+  .chatbot-container {
+    width: 95%; /* Chiếm toàn bộ chiều rộng màn hình nhỏ hơn */
+    height: 85vh; /* Chiều cao tăng thêm */
+    padding: 1rem;
+  }
+
+  .chat-display {
+    height: 40vh;
+    max-height: 50vh;
+  }
+
+  .question-button {
+    flex: 1 1 100%; /* Trải rộng toàn bộ chiều ngang */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatbot-title {
+    font-size: calc(1.2rem + 1vw); /* Tăng scale cho font-size */
+  }
+
+  .send-button {
+    padding: 0.5rem;
+    font-size: calc(1.2rem + 0.5vw); /* Tăng font-size cho send-button */
+  }
+}
