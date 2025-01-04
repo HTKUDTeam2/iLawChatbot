@@ -21,10 +21,6 @@ app.add_middleware(
 # Tải vector database khi ứng dụng khởi động
 @app.on_event("startup")
 async def load_existing_chroma_db():
-    """
-    Hàm được gọi khi ứng dụng khởi động.
-    Tải vector database từ thư mục đã lưu và in ra một số nội dung mẫu.
-    """
     try:
         print("Loading Chroma database...")
         app.state.chroma_db = load_chroma_db("vector_db")
@@ -40,23 +36,12 @@ async def load_existing_chroma_db():
 # Gắn router cho chatbot
 app.include_router(chatbot_router, prefix="/chatbot", tags=["Chatbot"])
 
-# Xử lý lỗi khi ứng dụng dừng
-
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """
-    Hàm được gọi khi ứng dụng dừng.
-    Có thể dùng để giải phóng tài nguyên nếu cần.
-    """
     print("Shutting down application. Cleaning up resources.")
 
 # Endpoint kiểm tra trạng thái ứng dụng
-
-
 @app.get("/")
 async def health_check():
-    """
-    Endpoint để kiểm tra trạng thái ứng dụng.
-    """
     return {"status": "OK", "message": "Chatbot RAG API is running!"}

@@ -22,39 +22,57 @@ llm = ChatOpenAI(
     openai_api_key=openai_api_key,
 )
 
-# Định nghĩa mẫu prompt cho hệ thống
-system_prompt = """
-You are an Intellectual Property Lawyer named iLaw. Your primary responsibility is to assist users with legal questions related to intellectual property law. 
+##################### Truy suất câu hỏi #####################
+question_generated_prompt = """
+Bạn là một luật sư chuyên về Luật Sở hữu trí tuệ có tên là iLaw.
+Người dùng sẽ đưa cho bạn một câu hỏi liên quan đến luật sở hữu trí tuệ, nhưng tôi không biết nó có đầy đủ ngữ nghĩa hay chưa vì câu hỏi có thể chứa những từ đề cập đến nội dung hỏi đáp trước đớ: "nó", "đó", "cái đó",...
+Nhiệm vụ của bạn là đưa ra câu hỏi cụ thể hơn đầy đủ ngữ nghĩa nếu hiện tại người dùng đề cập đến những vấn đề trong lịch sử trò hỏi đáp. Tôi sẽ cung cấp cho bạn lịch sử hỏi đáp giữa người dùng và hệ thống để bạn có thể hiểu rõ hơn vấn đề mà người dùng đang quan tâm.
+## Lịch sử hỏi đáp:
+{conversation}
 
-### Context:
-{context}
-
-### Role and Guidelines:
-1. **Role**: You are acting as a professional lawyer specializing in Intellectual Property Law.
-2. **Language**: All responses must be in **Vietnamese**.
-3. **Audience**: Users may not have prior knowledge of legal terms, so your responses should be:
-   - Clear, detailed, and easy to understand.
-   - Free of unnecessary jargon.
-   - Supplemented with examples or analogies when necessary.
-4. **Fallback**: If no relevant documentation is found, respond with: **"Chúng tôi không tìm thấy thông tin liên quan."**
-5. **Prohibited**: Do not guess, assume, or provide advice that cannot be supported by laws or references.
----
-
-### Instructions:
-When answering, follow this structured reasoning process:
-1. **Identify the user's question**: Determine the specific area of Intellectual Property Law being addressed.
-2. **Explain the concept in detail**: Provide a step-by-step explanation of relevant legal terms or laws.
-3. **Apply to user's scenario**: Illustrate how the laws or terms apply to the user's context.
-4. **Provide actionable advice**: Suggest next steps, documents, or authorities the user should contact.
-
-
+## Kết quả trả về:
+- Một câu hỏi duy nhất bằng Tiếng Viêt.
+## Yêu cầu:
+- Câu hỏi cụ thể nhất có thể, và có đầy đủ ngữ cảnh nếu người dùng đang muốn đề cập đến vấn đề nào đó trong lịch sử hỏi đáp.
+- Nếu không có đề cập gì trong lịch sử hỏi đáp, hãy trả về câu hỏi ban đầu mà người dùng đưa ra.
+- Không bịa đặt, giả định hoặc thêm vào câu hỏi.
 """
 
 
+##################### RAG prompt #####################
+# Định nghĩa mẫu prompt cho hệ thống
+system_prompt = """
+Bạn là một luật sư chuyên về Luật Sở hữu trí tuệ có tên là iLaw. Trách nhiệm chính của bạn là hỗ trợ người dùng với các câu hỏi liên quan đến luật sở hữu trí tuệ.  
+Hãy phân tích câu hỏi của người dùng trước. Nếu câu hỏi của người dùng liên quan đến các câu hỏi trước đó, hãy đọc phần câu hỏi gần đây và trả lời. Danh sách câu hỏi gần đây sẽ được sắp xếp từ cũ nhất đến mới nhất, với mỗi câu hỏi được phân tách bằng ký tự xuống dòng (\n).  
+## Bối cảnh:  
+{context}  
+
+## Vai trò và Chỉ dẫn:
+1. **Vai trò**: Bạn đóng vai trò là một luật sư chuyên nghiệp chuyên về Luật Sở hữu trí tuệ.  
+2. **Ngôn ngữ**: Tất cả các câu trả lời phải bằng **tiếng Việt**.  
+3. **Đối tượng**: Người dùng có thể không có kiến thức trước về các thuật ngữ pháp lý, vì vậy câu trả lời của bạn cần:  
+   - Rõ ràng, chi tiết và dễ hiểu.  
+   - Không sử dụng thuật ngữ phức tạp không cần thiết.  
+   - Có thể bổ sung ví dụ hoặc so sánh nếu cần.  
+4. **Phương án thay thế**: Nếu không tìm thấy tài liệu liên quan, trả lời: **"Chúng tôi không tìm thấy thông tin liên quan."**  
+5. **Những điều cấm kỵ**: Không phỏng đoán, giả định hoặc cung cấp lời khuyên không được hỗ trợ bởi luật pháp hoặc tài liệu tham khảo.  
+---  
+
+## Hướng dẫn trả lời:  
+Khi trả lời, hãy tuân theo quy trình lý luận có cấu trúc sau:  
+1. **Xác định câu hỏi của người dùng**: Xác định lĩnh vực cụ thể của Luật Sở hữu trí tuệ mà câu hỏi đề cập.  
+2. **Trả lời câu hỏi**: Trả lời câu hỏi của người dùng một cách rõ ràng và chi tiết.
+3. **Trích dẫn luật cụ thế**: Nếu có điều khoản pháp lý hoặc quy định liên quan, hãy trích dẫn nguồn cụ thể từ đâu? năm bao nhiêu? ai ban hành?
+
+"""
 
 prompt_template = ChatPromptTemplate.from_messages(
-    [("system", system_prompt), ("human", "Question: {question}")]
+    [
+        ("system", system_prompt),
+        ("human", "Question: {question}")
+    ]
 )
+
 
 # Khởi tạo chuỗi RAG với prompt_template
 rag_chain = (
@@ -66,20 +84,15 @@ rag_chain = (
     | StrOutputParser()
 )
 
+# Kết hợp các retriever và mô hình reranker vào một ensemble retriever
 class EnhancedEnsembleRetriever:
     def __init__(self, retrievers, weights, reranker_model=None):
-        """
-        Initialize the ensemble retriever with multiple retrievers and optional reranker.
-        """
         self.retrievers = retrievers
         self.weights = weights
         self.reranker = CrossEncoder(reranker_model) if reranker_model else None
 
     def invoke(self, query):
-        """
-        Invoke the retrievers to get relevant documents and re-rank if necessary.
-        """
-        # 1. Lấy kết quả từ từng retriever
+        # Lấy kết quả từ từng retriever
         all_results = []
         for retriever, weight in zip(self.retrievers, self.weights):
             results = retriever.get_relevant_documents(query)
@@ -88,7 +101,7 @@ class EnhancedEnsembleRetriever:
                 doc.metadata['score'] = doc.metadata.get('score', 1.0) * weight
             all_results.extend(results)
 
-        # 2. Loại bỏ trùng lặp (nếu cần) theo nội dung
+        # Loại bỏ trùng lặp 
         unique_results = []
         seen_content = set()
 
@@ -98,26 +111,23 @@ class EnhancedEnsembleRetriever:
                 unique_results.append(doc)
                 seen_content.add(content)
         
-        # 3. Rerank nếu có mô hình reranker
+        # Rerank nếu có mô hình reranker
         if self.reranker:
             query_doc_pairs = [(query, doc.page_content) for doc in unique_results]
             scores = self.reranker.predict(query_doc_pairs)
             reranked_results = sorted(
                 zip(unique_results, scores),
-                key=lambda x: x[1],  # Sắp xếp theo điểm số
+                key=lambda x: x[1], 
                 reverse=True
             )
             return [doc for doc, score in reranked_results]
 
-        # 4. Nếu không rerank, trả về kết quả theo trọng số
+        # Nếu không rerank, trả về kết quả theo trọng số
         return sorted(unique_results, key=lambda x: x.metadata['score'], reverse=True)
 
 
 # Hàm tạo retriever từ Chroma và BM25
 def create_retriever(vector_db, query, k=4):
-    """
-    Tạo một retriever kết hợp giữa Chroma và BM25 cho một cơ sở dữ liệu vector.
-    """
     # Tạo BM25 retriever
     chroma_retriever = vector_db.as_retriever(search_type='similarity', search_kwargs={'k': k})
 
@@ -139,20 +149,14 @@ def create_retriever(vector_db, query, k=4):
     return ensemble_retriever
 
 
-# Hàm lấy tài liệu phù hợp từ retriever
+# Retrieve documents từ vector database
 def retrieve_documents(ensemble_retriever, query, top_k=4):
-    """
-    Lấy các tài liệu phù hợp từ ensemble retriever.
-    """
     docs = ensemble_retriever.invoke(query=query)
     return docs[:top_k]
 
 
-# Hàm định dạng tài liệu thành chuỗi
+# Định dạng documents thành chuỗi
 def format_docs(docs):
-    """
-    Định dạng các tài liệu thành chuỗi văn bản cho hệ thống RAG.
-    """
     formatted_docs =""
     for i, doc in enumerate(docs):
         formatted_docs += f"Document {i+1}:\n{doc.page_content}\n\n"
@@ -160,18 +164,31 @@ def format_docs(docs):
     return formatted_docs
 
 
-# Hàm gọi chuỗi RAG và sinh câu trả lời
-def generate_answer(vector_db, question, top_k=4):
-    """
-    Sinh câu trả lời cho câu hỏi dựa trên cơ sở dữ liệu vector và chuỗi RAG.
-    """
-    # Tạo retriever kết hợp
-    ensemble_retriever = create_retriever(vector_db, question, k=top_k)
+def generate_answer(vector_db, question, conversation=None, top_k=4):
+
     
-    # Lấy các tài liệu phù hợp
-    docs = retrieve_documents(ensemble_retriever, question, top_k=top_k)
+    if conversation:
+        formatted_conversasion = "\n".join(
+            [f"User's question: {qa['question']}\nAI response: {qa['answer']}" for qa in conversation]
+        )
+    else:
+        formatted_conversasion = "Chưa có cuộc trò chuyện nào trước đó."
     
-    # Lấy các thông tin từ metadata của tài liệu (link, title)
+    # Kết hợp ngữ cảnh từ lịch sử trò chuyện và tài liệu retriever
+    question_context = question_generated_prompt.format(conversation=formatted_conversasion)
+    fully_context_question = rag_chain.invoke({"context": question_context, "question": question})
+    print("Câu hỏi cụ thể của người dùng: ", fully_context_question)
+    
+    # Tạo retriever kết và truy xuất những tài liệu liên quan
+    ensemble_retriever = create_retriever(vector_db, fully_context_question, k=top_k)
+    docs = retrieve_documents(ensemble_retriever, fully_context_question, top_k=top_k)
+    # Định dạng tài liệu thành chuỗi văn bản
+    formatted_docs = format_docs(docs)
+    print("Tài liệu trả về: ", formatted_docs)
+    # Gọi chuỗi RAG với ngữ cảnh đầy đủ
+    output = rag_chain.invoke({"context": formatted_docs, "question": fully_context_question})
+    
+    # Xử lý metadata của các tài liệu để lấy liên kết và tiêu đề
     seen_links = set()
     unique_links = []
     unique_titles = []
@@ -184,10 +201,4 @@ def generate_answer(vector_db, question, top_k=4):
             seen_links.add(link)
             unique_links.append(link)
             unique_titles.append(title)
-    
-    # Định dạng các tài liệu thành chuỗi văn bản
-    formatted_docs = format_docs(docs)
-    print(formatted_docs)
-    # Gọi chuỗi RAG để tạo câu trả lời
-    output = rag_chain.invoke({"context": formatted_docs, "question": question})
     return output, unique_links, unique_titles

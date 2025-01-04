@@ -1,8 +1,9 @@
 from pydantic import BaseModel
-
+from typing import List, Dict
 
 class ChatbotRequest(BaseModel):
-    question: str
+    conversation: List[Dict[str, str]]
+    currentQuestion: str
 
 
 class ChatbotResponse(BaseModel):
