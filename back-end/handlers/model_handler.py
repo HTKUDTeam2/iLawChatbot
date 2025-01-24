@@ -189,7 +189,7 @@ def generate_answer(vector_db, question, conversation=None, top_k=4):
     docs = retrieve_documents(ensemble_retriever, fully_context_question, top_k=top_k)
     # Định dạng tài liệu thành chuỗi văn bản
     formatted_docs = format_docs(docs)
-    print("Tài liệu trả về: ", formatted_docs)
+    # print("Tài liệu trả về: ", formatted_docs)
     # Gọi chuỗi RAG với ngữ cảnh đầy đủ
     output = rag_chain.invoke({"context": formatted_docs, "question": fully_context_question})
     
