@@ -15,6 +15,7 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [displayText, setDisplayText] = useState("");
   const chatDisplayRef = useRef(null);
+  const [conversation, setConversation] = useState([]);
 
   const handleQuestionClick = (question) => {
     setInputValue(question);
@@ -73,7 +74,8 @@ const Chatbot = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            question: inputValue,
+            conversation, // Ngũ cảnh cuộc hội thoại
+            currentQuestion: inputValue.trim(),
           }),
         });
 
@@ -86,6 +88,10 @@ const Chatbot = () => {
             titles: data.titles,
             links: data.links,
           };
+          
+          const updatedConversation = [
+            ...conversation, { question: inputValue.trim(), answer: data.answer },].slice(-5); 
+          setConversation(updatedConversation);
           setMessages([...updatedMessages, newBotMessage]);
           await typeMessage(data.answer);
           setResponse(data);
